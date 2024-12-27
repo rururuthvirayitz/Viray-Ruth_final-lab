@@ -1,8 +1,137 @@
-    h1{
-        color: #000000;
-    }
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    .mylogo{
-        height: 300px;
-        width: auto;
-    }
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: black;
+    color: #333;
+    padding: 0 20px;
+    margin-top: 120px;
+}
+
+h1, h2 {
+    color: white;
+    margin-bottom: 10px;
+    text-align: center  ;
+    font-family: cursive;
+
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+
+
+header {
+    position: fixed;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    background-color: transparent;
+    color: white;
+    padding: 15px 20px;
+    z-index: 1000;
+    box-shadow: 0 4px 10px white;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+header a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 18px;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+/* Content Styling */
+.post-entry {
+    background-color: black;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-entry h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.post-entry p {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.mylogo {
+    position: fixed;
+    bottom: 20px;
+    right: .5%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: auto;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.1);
+    border-top: none;
+    background: transparent;
+}
+
+
+.profile-photo {
+    width: 150px;
+    border-radius: 50%;
+    margin: 20px 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    margin: 10px 0;
+}
+
+ul li a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+ul li a:hover {
+    color: #007bff;
+}
+
+/* Page-Specific Styles */
+.about-page {
+    text-align: center;
+}
+
+.about-page img {
+    width: 200px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.about-page p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto 20px auto;
+}
+

@@ -1,0 +1,18 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+
+        <div class="post-entry">
+            <h2><a href="">{{ parent.first_name }} {{ parent.last_name }}</a> </h2>
+            <p>Middle Name: {{ parent.middle_name }}</p>
+            <p>Age: {{ parent.age }}</p>
+            <p>Gender: {{ parent.gender }}</p>
+            <p>Address: {{ parent.address }}</p>
+            <p>Email: {{ parent.email }}</p>
+            <p>Phone Number: {{ parent.phone_number }}</p>
+            <p>Student: {{ parent.student }}</p>
+        </div>
+        <a href="{% url 'parent_update' parent.pk %}">+ Edit Parent</a>
+        <a href="{% url 'parent_delete' parent.pk %}">- Delete Parent</a>
+        <a href="{% url 'parent' %}">Back</a>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<a href="{% url 'teacher_create' %}">+ New Teacher</a>
+<div class="nav-right">
+</div>
+    {% for teacher in teachers %}
+        <div class="post-entry">
+            <h2><a href="{% url 'teacher_detail' teacher.pk %}">{{ teacher.first_name }} {{ teacher.last_name }}</a></h2>
+        </div>
+    {% endfor %}
+<img class="mylogo" src="{% static 'images/logo.png' %}">
+{% endblock content %}

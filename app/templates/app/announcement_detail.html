@@ -1,0 +1,16 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+
+        <div class="post-entry">
+            <h2><a href="">Title: {{ announcement.title }}</a> </h2>
+            <p>Content: {{announcement.content}}</p>
+            <p>Body: {{announcement.body}}</p>
+            <p>Created By: {{announcement.created_by}}</p>
+            <p>Visibility: {{announcement.visibility}}</p>
+        </div>
+        <a href="{% url 'announcement_update' announcement.pk %}">+ Edit Announcement</a>
+        <a href="{% url 'announcement_delete' announcement.pk %}">- Delete Announcement</a>
+        <a href="{% url 'announcement' %}">Back</a>
+
+{% endblock content %}

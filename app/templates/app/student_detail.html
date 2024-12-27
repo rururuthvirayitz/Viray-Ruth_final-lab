@@ -1,0 +1,20 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+
+        <div class="post-entry">
+            <h2><a href="">{{ student.first_name }} {{ student.last_name }}</a> </h2>
+            <p>Middle Name: {{ student.middle_name }}</p>
+            <p>Date of Birth: {{ student.date_of_birth }}</p>
+            <p>Age: {{ student.age }}</p>
+            <p>Gender: {{ student.gender }}</p>
+            <p>Address: {{ student.address }}</p>
+            <p>Parent: {{ student.parent }}</p>
+            <p>Email: {{ student.email }}</p>
+            <p>Parent Phone Number: {{ student.parent_phone_number }}</p>
+            <p>Grade Level: {{ student.grade_level }}</p>
+        </div>
+        <a href="{% url 'student_update' student.pk %}">+ Edit Student</a>
+        <a href="{% url 'student_delete' student.pk %}">- Delete Student</a>
+        <a href="{% url 'student' %}">Back</a>
+{% endblock content %}

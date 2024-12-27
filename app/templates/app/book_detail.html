@@ -1,0 +1,16 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+
+        <div class="post-entry">
+            <h2><a href="">{{ book.name }}</a> </h2>
+            <p>Author: {{ book.author }}</p>
+            <p>Content: {{ book.content }}</p>
+            <p>Isbn: {{ book.isbn }}</p>
+            <p>Copies Available: {{ book.copies_available }}</p>
+
+        </div>
+        <a href="{% url 'book_update' book.pk %}">+ Edit Book</a>
+        <a href="{% url 'book_delete' book.pk %}">- Delete Book</a>
+        <a href="{% url 'book' %}">Back</a>
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+     <h1>Edit Teacher</h1>
+    <form action="{% url 'teacher_delete' teacher.pk %}" method="post">
+      {% csrf_token %}
+      <p>Are you sure you want to delete {{ teacher.first_name }} {{ teacher.last_name }}?</p>
+      <input type="submit" value="Confirm">
+    </form>
+    <a href="{% url 'teacher' %}">Cancel</a>
+{% endblock content %}

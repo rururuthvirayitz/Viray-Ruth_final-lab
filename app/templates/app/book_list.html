@@ -1,0 +1,13 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+<a href="{% url 'book_create' %}">+ New Book</a>
+<div class="nav-right">
+</div>
+    {% for book in books %}
+        <div class="post-entry">
+            <h2><a href="{% url 'book_detail' book.pk %}">{{ book.author }}</a> </h2>
+        </div>
+    {% endfor %}
+<img class="mylogo" src="{% static 'images/logo.png' %}">
+{% endblock content %}

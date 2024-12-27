@@ -1,0 +1,22 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+
+        <div class="post-entry">
+            <h2><a href="">{{ teacher.first_name }} {{ teacher.last_name }}</a> </h2>
+            <p>Middle Name: {{ teacher.middle_name }}</p>
+            <p>Date of Birth: {{ teacher.date_of_birth }}</p>
+            <p>Age: {{ teacher.age }}</p>
+            <p>Gender: {{ teacher.gender }}</p>
+            <p>Address: {{ teacher.address }}</p>
+            <p>Department: {{ teacher.department }}</p>
+            <p>Email: {{ teacher.email }}</p>
+            <p>Phone Number: {{ teacher.phone_number }}</p>
+            <p>Subject: {{ teacher.subject }}</p>
+            <p>Hire Date: {{ teacher.hire_date }}</p>
+            <p>Employment Status: {{ teacher.employment_status }}</p>
+        </div>
+        <a href="{% url 'teacher_update' teacher.pk %}">+ Edit Teacher</a>
+        <a href="{% url 'teacher_delete' teacher.pk %}">- Delete Teacher</a>
+        <a href="{% url 'teacher' %}">Back</a>
+{% endblock content %}
