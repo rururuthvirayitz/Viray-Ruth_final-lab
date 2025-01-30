@@ -1,137 +1,108 @@
-/* General Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+/* Global Styles */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: black;
+    background: linear-gradient(to bottom right, #ffffff, #1e293b); /* White to Navy Blue Gradient */
     color: #333;
-    padding: 0 20px;
-    margin-top: 120px;
+    font-family: 'Arial', sans-serif;
 }
 
-h1, h2 {
-    color: white;
-    margin-bottom: 10px;
-    text-align: center  ;
-    font-family: cursive;
-
+.navbar {
+    background: #1e293b; /* Updated to a new color, adjust to any color you prefer */
+    box-shadow: 0 4px 6px rgb(255, 255, 255); /* White shadow effect */
 }
 
-h1 {
-    font-size: 2.5rem;
-    margin-top: 20px;
+.navbar a {
+    color: #050505 !important;
 }
 
-h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
+.navbar-toggler-icon {
+    background-color: #1e293b;
 }
 
-
-
-header {
-    position: fixed;
-    top: 20px;
-    left: 0;
-    width: 100%;
-    background-color: transparent;
-    color: white;
-    padding: 15px 20px;
-    z-index: 1000;
-    box-shadow: 0 4px 10px white;
-
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-
-header a {
-    color: white;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 18px;
-}
-
-header a:hover {
-    text-decoration: underline;
-}
-
-/* Content Styling */
-.post-entry {
-    background-color: black;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.post-entry h2 {
-    font-size: 1.8rem;
+/* Section Titles */
+.section-title {
+    color: #001f3d; /* Navy Blue */
+    font-weight: bold;
+    font-size: 1.5rem;
     margin-bottom: 15px;
 }
 
-.post-entry p {
-    font-size: 1.1rem;
-    color: #666;
-}
-
-.mylogo {
-    position: fixed;
-    bottom: 20px;
-    right: .5%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: auto;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.1);
-    border-top: none;
-    background: transparent;
-}
-
-
-.profile-photo {
-    width: 150px;
-    border-radius: 50%;
-    margin: 20px 0;
-}
-
-ul {
-    list-style-type: none;
-}
-
-ul li {
-    margin: 10px 0;
-}
-
-ul li a {
-    color: #333;
-    text-decoration: none;
-    font-size: 1.2rem;
-}
-
-ul li a:hover {
-    color: #007bff;
-}
-
-/* Page-Specific Styles */
-.about-page {
-    text-align: center;
-}
-
-.about-page img {
-    width: 200px;
+/* Container Styling */
+.container {
+    background-color: rgb(255, 255, 255); /* Light white background */
     border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); /* White shadow effect */
+    padding: 20px;
     margin-top: 20px;
 }
 
-.about-page p {
-    font-size: 1.2rem;
-    max-width: 800px;
-    margin: 0 auto 20px auto;
+/* Button Styling */
+.btn-primary {
+    background-color: #939393; /* Navy Blue */
+    border: none;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2); /* White shadow effect */
+    color: white;
 }
 
+.btn-primary:hover {
+    background-color: #003366; /* Darker Navy */
+}
+
+/* Footer Styling */
+footer {
+    background-color: #001f3d; /* Navy Blue */
+    color: white;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2); /* White shadow effect */
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* Form Inputs */
+.form-control, .form-select {
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2); /* White shadow effect */
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #001f3d; /* Navy Blue */
+    box-shadow: 0 0 5px rgba(0, 31, 61, 0.5); /* Focus Shadow */
+}
+
+/* Cards for Book List */
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2); /* White shadow effect */
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.card-title {
+    color: #001f3d; /* Navy Blue */
+}
+
+/* Input Groups for Search */
+.input-group input {
+    border-radius: 5px 0 0 5px;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2); /* White shadow effect */
+}
+
+.input-group button {
+    border-radius: 0 5px 5px 0;
+    background-color: #001f3d;
+    color: white;
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.2); /* White shadow effect */
+}
+
+.mylogo {
+    width: 100px; /* Adjust this size as needed */
+    height: auto;
+    position: fixed;
+    bottom: 20px; /* Distance from the bottom */
+    right: 20px;  /* Distance from the right */
+    z-index: 999; /* Ensures it floats above other content */
+}
+.d-grid{
+    background: white;
+}

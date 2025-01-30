@@ -1,0 +1,108 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+<div class="container enrollment-page">
+    <!-- Page Title -->
+    <div class="container text-center mb-4 p-4 page-title">
+        <h1 class="text-primary">Enrollment Page</h1>
+        <p class="lead">Enroll now and secure your spot for the upcoming academic year!</p>
+    </div>
+
+    <!-- Enrollment Form Section -->
+    <div class="container enrollment-form-container mb-4 p-4">
+        <h2 class="section-title text-primary">Enrollment Form</h2>
+        <form method="POST">
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label for="id_name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="id_name" name="name" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_student_number" class="form-label">Student Number</label>
+        <input type="text" class="form-control" id="id_student_number" name="student_number" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_grade" class="form-label">Grade</label>
+        <select class="form-select" id="id_grade" name="grade" required>
+            <option value="">Select Grade</option>
+            <option value="1">Grade 1</option>
+            <option value="2">Grade 2</option>
+            <option value="3">Grade 3</option>
+            <option value="4">Grade 4</option>
+            <option value="5">Grade 5</option>
+            <option value="6">Grade 6</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_birthdate" class="form-label">Date of Birth</label>
+        <input type="date" class="form-control" id="id_birthdate" name="birthdate" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="id_email" name="email" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_address" class="form-label">Address</label>
+        <textarea class="form-control" id="id_address" name="address" required></textarea>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_gender" class="form-label">Gender</label>
+        <select class="form-select" id="id_gender" name="gender" required>
+            <option value="">Select Gender</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            <option value="O">Other</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="id_emergency_contact" class="form-label">Emergency Contact</label>
+        <input type="text" class="form-control" id="id_emergency_contact" name="emergency_contact" required>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Submit Enrollment</button>
+    </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+</form>
+
+    </div>
+</div>
+
+
+
+
+    <!-- Enrollment Guidelines Section -->
+    <div class="container guidelines-container mb-4 p-4">
+        <h2 class="section-title text-primary">Enrollment Guidelines</h2>
+        <ul>
+            <li>Ensure all required fields in the form are filled out completely.</li>
+            <li>Submit necessary documents such as birth certificate and report card.</li>
+            <li>Payment of enrollment fees can be made online or at the school office.</li>
+            <li>For inquiries, please contact the registrar's office.</li>
+        </ul>
+    </div>
+
+    <!-- FAQs Section -->
+    <div class="container faq-container mb-4 p-4">
+        <h2 class="section-title text-primary">Frequently Asked Questions</h2>
+        <ul>
+            <li><strong>Q: What grades can enroll?</strong> A: Enrollment is open for Grades 1-6.</li>
+            <li><strong>Q: What documents are required?</strong> A: Birth certificate, previous school report card, and proof of payment.</li>
+            <li><strong>Q: How do I check the status of my enrollment?</strong> A: You will receive a confirmation email or text message after submission.</li>
+        </ul>
+    </div>
+
+{% endblock %}

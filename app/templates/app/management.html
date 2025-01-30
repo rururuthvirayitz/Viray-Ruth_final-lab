@@ -1,0 +1,74 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+    <!-- Main Container for the Admin Enrollment & Admission Page -->
+
+    <h1 class="text-center my-5 text-primary">Admin Enrollment and Admission</h1>
+
+    <div class="row">
+        <!-- Enrollment Form Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Enroll New Student</h3>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="student_name" class="form-label">Student Name</label>
+                            <input type="text" class="form-control" id="student_name" name="student_name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="student_number" class="form-label">Student Number</label>
+                            <input type="email" class="form-control" id="student_number" name="student_number" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="student_grade" class="form-label">Grade</label>
+                            <input type="text" class="form-control" id="student_grade" name="student_grade" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enroll Student</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Admissions Section -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Pending Admissions</h3>
+                    <p class="card-text">Review and approve pending student admissions.</p>
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Grade</th>
+                                <th>Student Number</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in pending_students %}
+                                <tr>
+                                    <td>{{ student.name }}</td>
+                                    <td>{{ student.email }}</td>
+                                    <td>{{ student.course }}</td>
+                                    <td>{{ student.status }}</td>
+                                    <td>
+                                        <a href="" class="btn btn-success btn-sm">Approve</a>
+                                        <a href="" class="btn btn-danger btn-sm">Reject</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock content %}

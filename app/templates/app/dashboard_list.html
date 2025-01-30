@@ -1,0 +1,175 @@
+{% load static %}
+{% block content %}
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+</head>
+
+<div class="text-center my-4">
+    <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        <i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'files' %}">
+                        <i class="bi bi-book"></i> Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admission' %}">
+                        <i class="bi bi-file-earmark-person"></i> Enrollment
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'list' %}">
+                        <i class="bi bi-list"></i> List
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <!-- Main container to hold all sections -->
+
+    <!-- Welcome Banner Section -->
+    <div class="container mb-4">
+        <div class="welcome-banner">
+            <h1>Welcome, Admin!</h1>
+            <p>Your last login was: January 25, 2025</p>
+        </div>
+    </div>
+
+    <!-- Account Analytics Section -->
+    <div class="container mb-4">
+        <h3 class="section-title text-primary mb-3">Analytics</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Category</th>
+                        <th>Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Teacher Users</td>
+                        <td>{{ teacher_count }}</td>
+                    </tr>
+                    <tr>
+                        <td>Personnel Users</td>
+                        <td>{{ personnel_count }}</td>
+                    </tr>
+                    <tr>
+                        <td>Admission Records</td>
+                        <td>{{ admission_count }}</td>
+                    </tr>
+                    <tr>
+                        <td>New Admissions (This Month)</td>
+                        <td>{{ new_admissions }}</td>
+                    </tr>
+                    <tr>
+                        <td>New Teachers (This Month)</td>
+                        <td>{{ new_teachers }}</td>
+                    </tr>
+                    <tr>
+                        <td>New Personnel (This Month)</td>
+                        <td>{{ new_personnel }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Announcements Section -->
+    <div class="container mb-4">
+        <div class="announcement-box">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="section-title text-primary">Announcements</h3>
+                <a href="{% url 'announcement' %}" class="btn btn-outline-primary btn-sm">More</a>
+            </div>
+            <div class="announcement-content">
+                {% for announcement in announcements %}
+                <div class="announcement-item mb-3">
+                    <h4 class="announcement-title">{{ announcement.title }}</h4>
+                    <p>Created By: {{ announcement.created_by }}</p>
+                    <p>{{ announcement.content}}</p>
+                    <p>{{ announcement.body }}</p>
+                    <p>{{ announcement.visibility }}</p>
+                </div>
+                {% empty %}
+                <p>No announcements available.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendar Section -->
+    <div class="container mb-4">
+        <div class="academic-calendar">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="section-title text-primary">Calendar</h3>
+                <a href="{% url 'calendar_event' %}" class="btn btn-outline-primary btn-sm">View Calendar</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Event</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for event in events %}
+                        <tr>
+                            <td>{{ event.event_name }}</td>
+                            <td>{{ event.start_date }}</td>
+                            <td>{{ event.end_date }}</td>
+                        </tr>
+                        {% empty %}
+                        <p>No events available.</p>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent School Events Section -->
+    <div class="container mb-4">
+        <div class="events-box">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="section-title text-primary">Recent School Events</h3>
+                <a href="calendar_event" class="btn btn-outline-primary btn-sm">More</a>
+            </div>
+            <div class="events-content">
+                <div class="event-item mb-3">
+                    <h4 class="event-title">Science Fair 2025</h4>
+                    <p class="event-date text-muted">Date: February 25, 2025</p>
+                    <p class="event-description">Join us for the annual Science Fair! Explore the exciting projects from students and learn about the latest innovations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

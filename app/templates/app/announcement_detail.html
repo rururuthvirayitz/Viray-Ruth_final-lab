@@ -1,16 +1,69 @@
-{% extends 'app/base.html' %}
 {% load static %}
 {% block content %}
 
-        <div class="post-entry">
-            <h2><a href="">Title: {{ announcement.title }}</a> </h2>
-            <p>Content: {{announcement.content}}</p>
-            <p>Body: {{announcement.body}}</p>
-            <p>Created By: {{announcement.created_by}}</p>
-            <p>Visibility: {{announcement.visibility}}</p>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+
+
+</head>
+
+<div class="text-center my-4">
+    <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        <i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'files' %}">
+                        <i class="bi bi-book"></i> Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admission' %}">
+                        <i class="bi bi-file-earmark-person"></i> Enrollment
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'list' %}">
+                        <i class="bi bi-list"></i> List
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
         </div>
-        <a href="{% url 'announcement_update' announcement.pk %}">+ Edit Announcement</a>
-        <a href="{% url 'announcement_delete' announcement.pk %}">- Delete Announcement</a>
-        <a href="{% url 'announcement' %}">Back</a>
+    </div>
+</nav>
+<!-- announcement_delete.html -->
+<div class="container my-5">
+    <h2 class="text-center text-primary">{{ announcement.title }}</h2>
+    <p class="text-center text-muted">Created By: {{ announcement.created_by }}</p>
+    <p class="text-center text-muted">{{ announcement.content}}</p>
+    <p class="text-center text-muted">{{ announcement.body }}</p>
+    <p class="text-center text-muted">{{ announcement.visibility }}</p>
+
+
+    <div class="d-flex justify-content-center mt-5">
+        <a href="{% url 'announcement' %}" class="btn btn-outline-primary">Back to Announcements</a>
+    </div>
+</div>
 
 {% endblock content %}

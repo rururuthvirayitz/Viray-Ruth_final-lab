@@ -1,0 +1,71 @@
+{% load static %}
+{% block content %}
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+
+
+</head>
+
+<div class="text-center my-4">
+    <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        <i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'files' %}">
+                        <i class="bi bi-book"></i> Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admission' %}">
+                        <i class="bi bi-file-earmark-person"></i> Enrollment
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'list' %}">
+                        <i class="bi bi-list"></i> List
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<h2 class="text-primary">📅 Calendar Events</h2>
+<a href="{% url 'calendar_event_create' %}" class="btn btn-success mb-3">+ Add Event</a>
+<ul class="list-group">
+    {% for event in events %}
+    <li class="list-group-item">
+
+        <a href="{% url 'calendar_event_detail' event.pk %}" >{{ event.event_name }}</a>
+        ({{ event.start_date }} - {{ event.end_date }})
+        <a href="{% url 'calendar_event_detail' event.pk %}" class="btn btn-info btn-sm">View</a>
+        <a href="{% url 'calendar_event_update' event.pk %}" class="btn btn-warning btn-sm">Edit</a>
+        <a href="{% url 'calendar_event_delete' event.pk %}" class="btn btn-danger btn-sm">Delete</a>
+    </li>
+    {% empty %}
+    <p>No events scheduled.</p>
+    {% endfor %}
+</ul>
+{% endblock content %}

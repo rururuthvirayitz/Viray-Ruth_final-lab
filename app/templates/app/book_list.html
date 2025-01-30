@@ -1,13 +1,54 @@
 {% extends 'app/base.html' %}
-{% load static %}
+
 {% block content %}
-<a href="{% url 'book_create' %}">+ New Book</a>
-<div class="nav-right">
-</div>
-    {% for book in books %}
-        <div class="post-entry">
-            <h2><a href="{% url 'book_detail' book.pk %}">{{ book.author }}</a> </h2>
+<div class="container book-list-container">
+    <h2 class="text-center my-4">Book List</h2>
+
+    <!-- Combined Search Form -->
+    <form method="GET" class="mb-4">
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Input for searching by file name -->
+                <input type="text" name="search" class="form-control" placeholder="Search for files by name" value="{{ request.GET.search }}">
+            </div>
+            <div class="col-md-4">
+                <!-- Dropdown to select a subject -->
+                <select name="subject" class="form-control">
+                    <option value="">All Subjects</option>
+                    {% for subject_code, subject_name in file_subject_choices %}
+                        <option value="{{ subject_code }}" {% if request.GET.subject == subject_code %}selected{% endif %}>{{ subject_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
         </div>
-    {% endfor %}
-<img class="mylogo" src="{% static 'images/logo.png' %}">
-{% endblock content %}
+
+        <!-- Search and Show All Buttons -->
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-outline-primary mt-2">Search</button>
+            <a href="{% url 'book' %}" class="btn btn-outline-secondary mt-2">Show All</a>
+        </div>
+    </form>
+
+    <div class="row">
+        {% for file in files %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ file.name }}</h5>
+                    <p class="card-text">
+                        <strong>Uploaded By:</strong> {{ file.uploaded_by }}<br>
+                        <strong>File Type:</strong> {{ file.get_file_type_display }}<br>
+                        <strong>Subject:</strong> {{ file.get_subject_display }}<br>
+                    </p>
+                    <a href="{{ file.file.url }}" class="btn btn-outline-primary" download>Download</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No files available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

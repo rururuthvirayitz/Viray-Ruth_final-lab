@@ -1,11 +1,55 @@
 {% extends 'app/base.html' %}
-{% load static %}
 {% block content %}
-    <h1>Hello World!</h1>
-    <h2>Welcome</h2>
 
 
+    <!-- Welcome Section -->
+    <div class="container welcome-container mb-4 p-4">
+        <h1 class="text-primary text-center">Welcome to [Your School Name]</h1>
+        <p class="text-center">
+            Discover more about our school, programs, and achievements. Join us in building a brighter future!
+        </p>
+    </div>
+
+    <!-- About the School Section -->
+    <div class="container about-container mb-4 p-4">
+        <h2 class="section-title text-primary">About Our School</h2>
+        <p>
+            [Your School Name] has been at the forefront of education since its establishment in [Year].
+            Our mission is to provide quality education and holistic development to our students.
+        </p>
+    </div>
+
+    <!-- Announcements Section -->
+    <div class="container announcements-container mb-4 p-4">
+        <h2 class="section-title text-primary">Latest Announcements</h2>
+        <ul>
+            <li>
+                <strong>Spring Enrollment:</strong> Enrollment is now open for the spring semester.
+                <a href="#">Learn more</a>.
+            </li>
+            <li>
+                <strong>Open House:</strong> Visit us on [Date] for a guided tour of our facilities.
+                <a href="#">Register here</a>.
+            </li>
+        </ul>
+    </div>
+
+    <!-- Contact Us Section -->
+    <div class="container contact-container mb-4 p-4">
+        <h2 class="section-title text-primary">Contact Us</h2>
+        <p>
+            Address: [School Address] <br>
+            Phone: [School Phone Number] <br>
+            Email: <a href="mailto:[School Email]">[School Email]</a>
+        </p>
+    </div>
 
 
-<img class="mylogo" src="{% static 'images/logo.png' %}">
-{% endblock content %}
+<footer class="bg-dark text-white text-center py-4">
+    <p>&copy; 2025 [School Name]. All rights reserved.</p>
+    <p>📍 Address: 123 School St., City, Country</p>
+    <p>📞 Phone: +123 456 7890 | ✉ Email: info@school.edu</p>
+</footer>
+
+
+{% endblock %}

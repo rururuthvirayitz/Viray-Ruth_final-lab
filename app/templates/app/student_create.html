@@ -1,10 +1,61 @@
-{% extends 'app/base.html' %}
 {% load static %}
 {% block content %}
-    <h1>New Post</h1>
-    <form action="{% url 'student_create' %}" method="post">
-      {% csrf_token %}
-      {{form.as_p}}
-      <input type="submit" value="Save">
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+
+
+</head>
+
+<div class="text-center my-4">
+    <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        <i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'files' %}">
+                        <i class="bi bi-book"></i> Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admission' %}">
+                        <i class="bi bi-file-earmark-person"></i> Enrollment
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'list' %}">
+                        <i class="bi bi-list"></i> List
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+ <h2>Create Student</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
     </form>
 {% endblock content %}

@@ -1,0 +1,68 @@
+{% load static %}
+{% block content %}
+
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+
+
+</head>
+
+<div class="text-center my-4">
+    <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        <i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'files' %}">
+                        <i class="bi bi-book"></i> Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admission' %}">
+                        <i class="bi bi-file-earmark-person"></i> Enrollment
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'list' %}">
+                        <i class="bi bi-list"></i> List
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- announcement_delete.html -->
+<div class="container my-5">
+    <h2 class="text-center text-primary">{{ calendar_event.event_name }}</h2>
+    <p class="text-center text-muted">Created By: {{ calendar_event.start_date }}</p>
+    <p class="text-center text-muted">{{ calendar_event.end_date}}</p>
+    <p class="text-center text-muted">{{ calendar_event.description }}</p>
+
+
+
+    <div class="d-flex justify-content-center mt-5">
+        <a href="{% url 'calendar_event' %}" class="btn btn-outline-primary">Back to Calendar</a>
+    </div>
+</div>
+{% endblock content %}

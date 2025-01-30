@@ -1,22 +1,68 @@
-{% extends 'app/base.html' %}
 {% load static %}
 {% block content %}
 
-        <div class="post-entry">
-            <h2><a href="">{{ teacher.first_name }} {{ teacher.last_name }}</a> </h2>
-            <p>Middle Name: {{ teacher.middle_name }}</p>
-            <p>Date of Birth: {{ teacher.date_of_birth }}</p>
-            <p>Age: {{ teacher.age }}</p>
-            <p>Gender: {{ teacher.gender }}</p>
-            <p>Address: {{ teacher.address }}</p>
-            <p>Department: {{ teacher.department }}</p>
-            <p>Email: {{ teacher.email }}</p>
-            <p>Phone Number: {{ teacher.phone_number }}</p>
-            <p>Subject: {{ teacher.subject }}</p>
-            <p>Hire Date: {{ teacher.hire_date }}</p>
-            <p>Employment Status: {{ teacher.employment_status }}</p>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+
+
+
+</head>
+
+<div class="text-center my-4">
+    <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+    <div class="container-fluid">
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        <i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'files' %}">
+                        <i class="bi bi-book"></i> Books
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admission' %}">
+                        <i class="bi bi-file-earmark-person"></i> Enrollment
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'list' %}">
+                        <i class="bi bi-list"></i> List
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+
+            </ul>
         </div>
-        <a href="{% url 'teacher_update' teacher.pk %}">+ Edit Teacher</a>
-        <a href="{% url 'teacher_delete' teacher.pk %}">- Delete Teacher</a>
-        <a href="{% url 'teacher' %}">Back</a>
+    </div>
+</nav>
+
+ <div class="container mb-4">
+    <h3 class="section-title text-primary mb-3">{{ teacher.first_name }} {{ teacher.last_name }}'s Details</h3>
+    <p><strong>Subject:</strong> {{ teacher.subject }}</p>
+    <p><strong>Email:</strong> {{ teacher.email }}</p>
+    <p><strong>Address:</strong> {{ teacher.address }}</p>
+    <p><strong>Birthdate:</strong> {{ teacher.date_of_birth }}</p>
+    <p><strong>Gender:</strong> {{ teacher.gender }}</p>
+    <a href="{% url 'teacher_update' teacher.id %}" class="btn btn-warning btn-sm">Edit</a>
+    <a href="{% url 'teacher_delete' teacher.id %}" class="btn btn-danger btn-sm">Delete</a>
+    <a href="{% url 'teachers' %}" class="btn btn-secondary btn-sm">Back to List</a>
+</div>
+
 {% endblock content %}

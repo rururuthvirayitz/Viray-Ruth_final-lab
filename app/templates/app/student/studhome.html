@@ -1,0 +1,72 @@
+{% extends 'app/base.html' %}
+{% block content %}
+
+<div class="student-dashboard">
+
+    <!-- Welcome Message Container -->
+    <div class="container welcome-message-container">
+        <div class="welcome-message">
+            <h2>Welcome {{ student.name }}</h2>
+            <p>We're glad to have you back for another semester! Here are some key updates:</p>
+        </div>
+    </div>
+
+    <!-- Academic Calendar Container -->
+    <div class="container calendar-container">
+        <h3 class="section-title text-primary">Academic Calendar</h3>
+        <div class="calendar-content">
+            <table class="table table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Month</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Event</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>January</td>
+                        <td>01/01/2025</td>
+                        <td>01/31/2025</td>
+                        <td>Spring Semester Begins</td>
+                    </tr>
+                    <!-- Add more calendar events -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Announcements Container -->
+    <div class="container announcement-container">
+        <h3 class="section-title text-primary">Announcements</h3>
+        <div class="announcement-item">
+            <h4>Spring Semester Begins</h4>
+            <p class="announcement-date text-muted">Date: January 1, 2025</p>
+            <p>The new semester starts on January 1st. Please prepare your schedules and materials in advance.</p>
+        </div>
+        <!-- Add more announcements -->
+    </div>
+
+    <!-- School Events Container -->
+    <div class="container events-container">
+        <h3 class="section-title text-primary">Upcoming School Events</h3>
+        <div class="event-item">
+            <h4>Science Fair 2025</h4>
+            <p class="event-date text-muted">Date: February 25, 2025</p>
+            <p>Join us for the annual Science Fair! Explore exciting student projects.</p>
+        </div>
+        <!-- Add more events -->
+    </div>
+
+    <!-- School Information Container -->
+    <div class="container school-info-container">
+        <h3 class="section-title text-primary">School Information</h3>
+        <p><strong>School Name:</strong> Example University</p>
+        <p><strong>Address:</strong> 123 School St, City, Country</p>
+        <p><strong>Contact:</strong> info@example.edu</p>
+    </div>
+
+</div>
+
+{% endblock %}

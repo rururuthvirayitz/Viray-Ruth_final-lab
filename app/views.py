@@ -1,137 +1,287 @@
-from django.shortcuts import render
+from django.contrib.auth.views import LoginView
+from django.shortcuts import render, redirect
+from datetime import datetime
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Post, Student, Teacher, Parent, Announcement, Book
-from .forms import StudentForm, TeacherForm, ParentsForm, AnnouncementForm, BooksForm
+from .models import Announcement, Book, AcademicEvent, Calendar, Dashboard, Files, Admission, Personnel, List, Teacher, CalendarEvent
+from .forms import AnnouncementForm, BooksForm, DashboardForm, PersonnelForm, FilesForm, EnrollmentForm, ListForm, TeacherForm, CalendarEventForm
 from django.urls import reverse_lazy
 
-class HomePageView(TemplateView):
-    template_name = 'app/home.html'
 
-class AboutPageView(TemplateView):
-    template_name = 'app/about.html'
+class CustomLoginView(LoginView):
+    template_name = 'registration/login.html'  # Specify your login template
 
-class BlogListView(ListView):
-    model = Post
-    context_object_name = 'posts'
-    template_name = 'app/blog_list.html'
+    def get_success_url(self):
+        # Redirect based on the user's role
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            return redirect('dashboard')  # Admin dashboard
+        else:
+            return redirect('studhome')  # Student home
 
-class BlogDetailView(DetailView):
-    model = Post
-    context_object_name = 'post'
-    template_name = 'app/blog_detail.html'
+def admin_dashboard(request):
+    return render(request, 'app/dashboard_list.html')  # Admin-specific template
 
-class BlogCreateView(CreateView):
-    model = Post
-    fields = ['title', 'author', 'body']
-    template_name = 'app/blog_create.html'
 
-class BlogUpdateView(UpdateView):
-    model = Post
-    fields = ['title', 'author', 'body']
-    template_name = 'app/blog_update.html'
+def admin_files(request):
+    return render(request, 'app/files_list.html')
 
-class BlogDeleteView(DeleteView):
-    model = Post
-    template_name = 'app/blog_delete.html'
-    success_url = reverse_lazy('home')
 
-class StudentListView(ListView):
-    model = Student
-    context_object_name = 'students'
-    template_name = 'app/student_list.html'
+class DashboardListView(ListView):
+    template_name = 'app/dashboard_list.html'
+    context_object_name = 'dashboard_data'
 
-class StudentDetailView(DetailView):
-    model = Student
-    context_object_name = 'student'
-    template_name = 'app/student_detail.html'
+    def get_queryset(self):
+        # Return an empty queryset or None since we're not using a specific model.
+        return []
 
-class StudentCreateView(CreateView):
-    model = Student
-    fields = ['first_name', 'last_name', 'middle_name', 'date_of_birth', 'age',
-              'gender', 'address', 'parent', 'email', 'parent_phone_number',
-              'grade_level']
-    template_name = 'app/student_create.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-class StudentUpdateView(UpdateView):
-    model = Student
-    fields = ['first_name', 'last_name', 'middle_name', 'date_of_birth', 'age',
-              'gender', 'address', 'parent', 'email', 'parent_phone_number',
-              'grade_level']
-    template_name = 'app/student_update.html'
+        # Fetch dashboard data
+        context['announcements'] = Announcement.objects.all().order_by('-id')[:5]  # Fetch latest 5 announcements
+        context['events'] = CalendarEvent.objects.all().order_by('-start_date')[:5]
 
-class StudentDeleteView(DeleteView):
-    model = Student
-    template_name = 'app/student_delete.html'
-    success_url = reverse_lazy('student')
+        # Count total records
+        context['teacher_count'] = Teacher.objects.count()
+        context['personnel_count'] = Personnel.objects.count()
+        context['admission_count'] = Admission.objects.count()
 
-class ParentListView(ListView):
-    model = Parent
-    context_object_name = 'parents'
-    template_name = 'app/parent_list.html'
+        return context
 
-class ParentDetailView(DetailView):
-    model = Parent
-    context_object_name = 'parent'
-    template_name = 'app/parent_detail.html'
 
-class ParentCreateView(CreateView):
-    model = Parent
-    fields = ['first_name', 'last_name', 'middle_name', 'age',
-              'gender', 'address', 'email', 'phone_number', 'student'
+class PersonnelListView(ListView):
+    model = Personnel
+    template_name = 'app/personnel_list.html'
+    context_object_name = 'personnel'
+
+class PersonnelDetailView(DetailView):
+    model = Personnel
+    context_object_name = 'personnel'
+    template_name = 'app/personnel_detail.html'
+
+# Create View for Personnel
+class PersonnelCreateView(CreateView):
+    model = Personnel
+    form_class = PersonnelForm
+    template_name = 'app/personnel_create.html'
+    success_url = reverse_lazy('personnel')  # Redirect to personnel list after success
+
+# Update View for Personnel
+class PersonnelUpdateView(UpdateView):
+    model = Personnel
+    form_class = PersonnelForm
+    template_name = 'app/personnel_update.html'
+    success_url = reverse_lazy('personnel')  # Redirect to personnel list after success
+
+# Delete View for Personnel
+class PersonnelDeleteView(DeleteView):
+    model = Personnel
+    template_name = 'app/personnel_delete.html'
+    success_url = reverse_lazy('personnel')
+
+
+class FilesListView(ListView):
+
+    model = Files
+    def get_queryset(self):
+        return Files.objects.all()
+
+class FilesDetailView(DetailView):
+    model = Files
+    template_name = 'app/files_detail.html'  # ✅ Matches your file path
+    context_object_name = 'files'
+
+class FilesCreateView(CreateView):
+    model = Files
+    fields = ['name', 'subject', 'file', 'file_type'
               ]
-    template_name = 'app/parent_create.html'
+    template_name = 'app/files_create.html'
 
-class ParentUpdateView(UpdateView):
-    model = Parent
-    fields = ['first_name', 'last_name', 'middle_name', 'age',
-              'gender', 'address', 'email', 'phone_number', 'student']
-    template_name = 'app/parent_update.html'
+    def get_success_url(self):
+        return reverse_lazy('files')
 
-class ParentDeleteView(DeleteView):
-    model = Parent
-    template_name = 'app/parent_delete.html'
-    success_url = reverse_lazy('parent')
+class FilesUpdateView(UpdateView):
+    model = Files
+    fields = ['name', 'subject', 'file', 'file_type']
+    template_name = 'app/files_update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('files')
+
+class FilesDeleteView(DeleteView):
+    model = Files
+    template_name = 'app/files_delete.html'
+    success_url = reverse_lazy('files')
+
+
+
+
+
+
+class AdmissionListView(ListView):
+    model = Admission
+    template_name = 'app/admission_list.html'
+    context_object_name = 'admissions'
+
+# Create Admission
+class AdmissionCreateView(CreateView):
+    model = Admission
+    fields = ['name', 'grade', 'student_number']
+    template_name = 'app/admission_create.html'
+    success_url = reverse_lazy('admission')  # Redirect to the list after saving
+
+# Update Admission
+class AdmissionUpdateView(UpdateView):
+    model = Admission
+    fields = ['name', 'grade', 'student_number', 'status']
+    template_name = 'app/admission_update.html'
+    success_url = reverse_lazy('admission')  # Redirect to the list after saving
+
+# Delete Admission
+class AdmissionDeleteView(DeleteView):
+    model = Admission
+    template_name = 'app/admission_delete.html'
+    success_url = reverse_lazy('admission')  # Redirect to the list after deleting
+
+class AdmissionDetailView(DetailView):
+    model = Admission
+    template_name = 'app/admission_detail.html'  # ✅ Matches your file path
+    context_object_name = 'admissions'
+
+class EnrollmentCreateView(CreateView):
+    model = Admission
+    form_class = EnrollmentForm
+    template_name = 'app/enrollment_create.html'
+    success_url = '/enrollment'  # Redirect to a success page or another view
+
+    # Override form_valid to save data to Admission
+    def form_valid(self, form):
+        # This will save the form data to the Admission model
+        form.save()
+        return redirect(self.success_url)
+
+
+class ListListView(ListView):
+    template_name = 'app/list_list.html'
+    context_object_name = 'list'
+
+    def get_queryset(self):
+        # Return an empty queryset or None since we're not using a single model.
+        return []
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['personnel'] = Personnel.objects.all().order_by('last_name')[:5]  # Fetch latest 5 personnel
+        context['teachers'] = Teacher.objects.all().order_by('last_name')[:5]
+
+        return context
+
 
 
 
 class TeacherListView(ListView):
     model = Teacher
-    context_object_name = 'teachers'
     template_name = 'app/teacher_list.html'
+    context_object_name = 'teachers'
 
 class TeacherDetailView(DetailView):
     model = Teacher
-    context_object_name = 'teacher'
     template_name = 'app/teacher_detail.html'
+    context_object_name = 'teacher'
 
 class TeacherCreateView(CreateView):
     model = Teacher
-    fields = ['first_name', 'last_name', 'middle_name', 'date_of_birth', 'age',
-              'gender', 'address', 'email', 'phone_number', 'department',
-              'subject', 'hire_date', 'employment_status'
-              ]
+    fields = ['first_name', 'last_name', 'subject', 'email', 'gender', 'age', 'address', 'date_of_birth']
     template_name = 'app/teacher_create.html'
+    success_url = reverse_lazy('teachers')
 
 class TeacherUpdateView(UpdateView):
     model = Teacher
-    fields = ['first_name', 'last_name', 'middle_name', 'date_of_birth', 'age',
-              'gender', 'address', 'email', 'phone_number', 'department',
-              'subject', 'hire_date', 'employment_status']
+    fields = ['first_name', 'last_name', 'subject', 'email', 'gender', 'age', 'address', 'date_of_birth']
     template_name = 'app/teacher_update.html'
+    success_url = reverse_lazy('teachers')
 
 class TeacherDeleteView(DeleteView):
     model = Teacher
     template_name = 'app/teacher_delete.html'
-    success_url = reverse_lazy('teacher')
+    success_url = reverse_lazy('teachers')
 
 
 
+
+class HomePageView(TemplateView):
+    template_name = 'app/home.html'
+
+
+class AboutPageView(TemplateView):
+    template_name = 'app/about.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Fetch the latest 5 announcements
+        context['announcements'] = Announcement.objects.all().order_by('-id')[:5]
+
+        return context
+
+
+
+class EnrollmentPageView(TemplateView):
+    template_name = 'app/enrollment.html'
+
+
+class CalendarListView(ListView):
+    model = CalendarEvent  # Specify the model here
+    template_name = 'app/calendar_list.html'
+    context_object_name = 'events'
+
+    # Override get_queryset to get the data
+    def get_queryset(self):
+        return CalendarEvent.objects.all().order_by('-start_date')[:5]
+
+
+
+class AcademicEventListView(ListView):
+    model = AcademicEvent
+    context_object_name = 'academicevent'
+    template_name = 'app/academicevent/academicevent_list.html'
+
+class AcademicEventDetailView(DetailView):
+    model = AcademicEvent
+    context_object_name = 'academicevent'
+    template_name = 'app/academicevent/academicevent_detail.html'
+
+class AcademicEventCreateView(CreateView):
+    model = AcademicEvent
+    fields = ['title', 'content', 'body', 'created_by', 'visibility'
+              ]
+    template_name = 'app/academicevent/academicevent_create.html'
+
+
+class AcademicEventUpdateView(UpdateView):
+    model = AcademicEvent
+    fields = ['title', 'content', 'body', 'created_by', 'visibility']
+    template_name = 'app/academicevent/academicevent_update.html'
+
+class AcademicEventDeleteView(DeleteView):
+    model = AcademicEvent
+    template_name = 'app/academicevent/academicevent_delete.html'
+    success_url = reverse_lazy('academicevent')
+
+
+
+def announcement_list(request):
+    announcements = Announcement.objects.all()  # Get all announcements
+    return render(request, 'app/announcement_list.html', {'announcements': announcements})
 
 class AnnouncementListView(ListView):
     model = Announcement
     context_object_name = 'announcements'
-    template_name = 'app/announcement_list.html'
+    template_name = 'app/announcement.html'
+
+    def get_queryset(self):
+        return Announcement.objects.all()
 
 class AnnouncementDetailView(DetailView):
     model = Announcement
@@ -144,10 +294,16 @@ class AnnouncementCreateView(CreateView):
               ]
     template_name = 'app/announcement_create.html'
 
+    def get_success_url(self):
+        return reverse_lazy('announcement')
+
 class AnnouncementUpdateView(UpdateView):
     model = Announcement
     fields = ['title', 'content', 'body', 'created_by', 'visibility']
     template_name = 'app/announcement_update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('announcement')
 
 class AnnouncementDeleteView(DeleteView):
     model = Announcement
@@ -157,28 +313,61 @@ class AnnouncementDeleteView(DeleteView):
 
 
 
+
+
 class BookListView(ListView):
-    model = Book
-    context_object_name = 'books'
-    template_name = 'app/book_list.html'
+    model = Files  # The model from which you want to fetch data (Files)
+    template_name = 'app/book_list.html'  # Template to render the data
+    context_object_name = 'files'
 
-class BookDetailView(DetailView):
-    model = Book
-    context_object_name = 'book'
-    template_name = 'app/book_detail.html'
 
-class BookCreateView(CreateView):
-    model = Book
-    fields = ['title', 'author', 'content', 'isbn', 'copies_available'
-              ]
-    template_name = 'app/book_create.html'
+    def get_queryset(self):
+        query = self.request.GET.get('search', '')
+        subject = self.request.GET.get('subject', '')  # Get selected subject
 
-class BookUpdateView(UpdateView):
-    model = Book
-    fields = ['title', 'author', 'content', 'isbn', 'copies_available']
-    template_name = 'app/book_update.html'
+        files = Files.objects.all()
 
-class BookDeleteView(DeleteView):
-    model = Book
-    template_name = 'app/book_delete.html'
-    success_url = reverse_lazy('book')
+        # Filter by name if a search query is provided
+        if query:
+            files = files.filter(name__icontains=query)
+
+        # Filter by subject if a subject is selected
+        if subject:
+            files = files.filter(subject=subject)
+
+        return files
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['file_subject_choices'] = Files.SUBJECT_CHOICES  # Add subject choices to context
+        return context
+
+
+
+class CalendarEventListView(ListView):
+    model = CalendarEvent
+    template_name = 'app/calendar_event_list.html'
+    context_object_name = 'events'
+    ordering = ['event_name', 'start_date', 'end_date', 'description']
+
+class CalendarEventDetailView(DetailView):
+    model = CalendarEvent
+    template_name = 'app/calendar_event_detail.html'
+    context_object_name = 'event'
+
+class CalendarEventCreateView(CreateView):
+    model = CalendarEvent
+    form_class = CalendarEventForm
+    template_name = 'app/calendar_event_create.html'
+    success_url = reverse_lazy('calendar_event')
+
+class CalendarEventUpdateView(UpdateView):
+    model = CalendarEvent
+    form_class = CalendarEventForm
+    template_name = 'app/calendar_event_update.html'
+    success_url = reverse_lazy('calendar_event')
+
+class CalendarEventDeleteView(DeleteView):
+    model = CalendarEvent
+    template_name = 'app/calendar_event_delete.html'
+    success_url = reverse_lazy('calendar_event')

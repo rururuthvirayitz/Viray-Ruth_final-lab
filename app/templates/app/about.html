@@ -1,7 +1,52 @@
 {% extends 'app/base.html' %}
-{% load static %}
+
 {% block content %}
-    <h1>Hey Wonderful!</h1>
-    <h2>About Me - Ruth Viray</h2>
-<img class="mylogo" src="{% static 'images/logo.png' %}">
-{% endblock content %}
+<div class="row">
+       <div class="container about-container mb-4 p-4 text-center">
+        <h2 class="section-title text-primary">About Our School</h2>
+        <p class="lead">
+            Our school is dedicated to fostering academic excellence and personal growth in every student.
+               With a legacy of innovation and commitment to holistic education, we provide an inclusive environment
+               that nurtures creativity, leadership, and lifelong learning.</p>
+            <p>Established in [Year], our institution has continually evolved to meet the challenges of the modern world
+               while staying true to our core values of integrity, respect, and excellence.</p>
+            <a href="/about" class="btn btn-primary">Learn More</a>
+           </p>
+    </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+</div>
+
+
+<div class="container">
+    <div class="announcement-box mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="section-title text-primary">Announcements</h3>
+        </div>
+        <div class="announcement-content">
+            {% for announcement in announcements %}
+            <div class="announcement-item mb-3">
+                <h4 class="announcement-title">{{ announcement.title }}</h4>
+                <p>Created By: {{ announcement.created_by }}</p>
+                <p>{{ announcement.content}}</p>
+                <p>{{ announcement.body }}</p>
+                <p>{{ announcement.visibility }}</p>
+            </div>
+            {% empty %}
+            <p>No announcements available.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<footer class="bg-dark text-white text-center py-4">
+    <p>&copy; 2025 [School Name]. All rights reserved.</p>
+    <p>📍 Address: 123 School St., City, Country</p>
+    <p>📞 Phone: +123 456 7890 | ✉ Email: info@school.edu</p>
+</footer>
+
+
+{% endblock %}
