@@ -4,76 +4,148 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
+        .section-title {
+            font-weight: bold;
+            font-size: 1.8rem;
+            color: navy;
+        }
 
+        /* Table Styling */
+        .table {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
+        .table th {
+            background-color: navy !important;
+            color: white !important;
+            text-align: center;
+        }
+
+        .table td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        /* Hover Effects */
+        .table tbody tr:hover {
+            background-color: #f1f5f9;
+            transition: 0.3s;
+        }
+
+        /* Button Styling */
+        .btn {
+            border-radius: 6px;
+            transition: 0.3s;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: navy;
+            color: white;
+        }
+
+        .btn-outline-warning:hover {
+            background-color: #ffc107;
+            color: white;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-outline-info:hover {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .table th, .table td {
+                font-size: 0.9rem;
+                padding: 8px;
+            }
+        }
+    </style>
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
+{% include 'app/adminbar.html' %}
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account' %}">
-                        <i class="bi bi-person"></i> Accounts
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
+<!-- Student List Section -->
+<div class="container mb-4">
+    <h3 class="section-title text-primary mb-3">
+        Student List
+        <a href="{% url 'student_create' %}" class="btn btn-outline-primary btn-sm">
+            <i class="bi bi-person-plus-fill"></i> Enroll New Student
+        </a>
+    </h3>
 
-            </ul>
-        </div>
+
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Birthdate</th>
+                    <th>Contact</th>
+                    <th>Email</th>
+                    <th>Grade</th>
+                    <th>Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.first_name }} {{ student.last_name }}</td>
+                    <td>{{ student.gender }}</td>
+                    <td>{{ student.birthdate }}</td>
+                    <td>{{ student.contact_number }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.grade }}</td>
+                    <td>{{ student.address }}</td>
+                    <td>
+                        <a href="{% url 'student_detail' student.id %}" class="btn btn-outline-info btn-sm">
+                            <i class="bi bi-eye"></i> Details
+                        </a>
+                        <a href="{% url 'student_update' student.id %}" class="btn btn-outline-warning btn-sm">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <a href="{% url 'student_delete' student.id %}" class="btn btn-outline-danger btn-sm">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center">No students found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+          <!-- Back Button -->
+    <a href="{% url 'list' %}" class="btn btn-outline-secondary btn-sm mb-3">
+        <i class="bi bi-arrow-left"></i> Back to List
+    </a>
     </div>
-</nav>
- <h2>Students List</h2>
-    <a href="{% url 'student_create' %}">Create Student</a>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Grade</th>
-            <th>Actions</th>
-        </tr>
-        {% for student in students %}
-            <tr>
-                <td>{{ student.first_name }} {{ student.last_name }}</td>
-                <td>{{ student.grade }}</td>
-                <td>
-                    <a href="{% url 'student_detail' student.id %}">View</a>
-                    <a href="{% url 'student_update' student.id %}">Edit</a>
-                    <a href="{% url 'student_delete' student.id %}">Delete</a>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+</div>
+
 {% endblock content %}

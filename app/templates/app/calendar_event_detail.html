@@ -4,65 +4,91 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
-
-
-
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
+<!-- Admin Navbar -->
+{% include 'app/adminbar.html' %}
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
-<!-- announcement_delete.html -->
+<!-- Event Detail Section -->
 <div class="container my-5">
-    <h2 class="text-center text-primary">{{ calendar_event.event_name }}</h2>
-    <p class="text-center text-muted">Created By: {{ calendar_event.start_date }}</p>
-    <p class="text-center text-muted">{{ calendar_event.end_date}}</p>
-    <p class="text-center text-muted">{{ calendar_event.description }}</p>
+    <h2 class="text-center text-primary mb-4">{{ events.event_name }}</h2>
 
+    <!-- Event Information -->
 
+    <p class="text-center text-muted mb-2"><strong>Start Date:</strong> {{ events.start_date }}</p>
+    <p class="text-center text-muted mb-2"><strong>End Date:</strong> {{ events.end_date }}</p>
+    <p class="text-center text-muted mb-4"><strong>Description:</strong> {{ events.description }}</p>
 
-    <div class="d-flex justify-content-center mt-5">
-        <a href="{% url 'calendar_event' %}" class="btn btn-outline-primary">Back to Calendar</a>
+    <!-- Back Button -->
+    <div class="d-flex justify-content-center">
+        <a href="{% url 'calendar_event' %}" class="btn btn-outline-primary btn-lg">
+            <i class="bi bi-arrow-left"></i> Back to Calendar
+        </a>
     </div>
 </div>
+
+<!-- Custom CSS -->
+<style>
+    .text-primary {
+        font-weight: 600;
+        color: #007bff;
+    }
+
+    .btn-outline-primary {
+        font-size: 1.2rem;
+        padding: 10px 30px;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .mylogo {
+        max-width: 200px;
+    }
+
+    .mb-4 {
+        margin-bottom: 2rem;
+    }
+
+    .mb-2 {
+        margin-bottom: 1rem;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    p {
+        font-size: 1.1rem;
+        color: #495057;
+    }
+
+    .btn-lg {
+        font-size: 1.2rem;
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+</style>
+
 {% endblock content %}

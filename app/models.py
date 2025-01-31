@@ -54,19 +54,80 @@ class Files(models.Model):
     def get_absolute_url(self):
         return reverse("files_detail", kwargs={"pk": self.pk})
 
-class Admission(models.Model):
-    name = models.CharField(max_length=255)  # Store the student's name
-    student_number = models.IntegerField(default=0)
-    grade = models.IntegerField(default=0)  # Store the student's number (like ID or unique number)
-    status = models.CharField(max_length=20,
-                              choices=[('Pending', 'Pending'), ('Approved', 'Approved'), ('Rejected', 'Rejected')],
-                              default='Pending')
+
+class Student(models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    gender = models.CharField(
+        max_length=10,
+        choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')],
+        default='Male'
+    )
+    birthdate = models.DateField()
+    contact_number = models.CharField(max_length=15)
+    email = models.EmailField(unique=True)
+    grade = models.PositiveIntegerField()
+    address = models.TextField()
+    guardian_name = models.CharField(max_length=255)
+    nationality = models.CharField(max_length=50)
+    student_number = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
-        return f'{self.name} ({self.student_number})'
+        return f'{self.first_name} {self.last_name} ({self.email})'
+
+
+class Admission(models.Model):
+    student_id = models.ForeignKey('Student', on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=255)
+    student_number = models.CharField(max_length=50, unique=True)
+    grade = models.PositiveIntegerField(default=1)
+
+    address = models.TextField()
+    birthdate = models.DateField()
+    email = models.EmailField(unique=True)
+    emergency_contact = models.CharField(max_length=15)
+    gender = models.CharField(
+        max_length=10,
+        choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')],
+        default='Male'
+    )
+
+    guardian_name = models.CharField(max_length=255)
+    nationality = models.CharField(max_length=50)
+    status = models.CharField(
+        max_length=20,
+        choices=[('Pending', 'Pending'), ('Approved', 'Approved'), ('Rejected', 'Rejected')],
+        default='Pending'
+    )
+    enroll_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name} ({self.status})"
 
     def get_absolute_url(self):
         return reverse("admission_detail", kwargs={"pk": self.pk})
+
+    def save(self, *args, **kwargs):
+        if self.status == "Approved" and not self.student_id:
+
+            student, created = Student.objects.get_or_create(
+                student_number=self.student_number,
+                defaults={
+                    'first_name': self.name.split()[0],
+                    'last_name': self.name.split()[1],
+                    'email': self.email,
+                    'gender': self.gender,
+                    'birthdate': self.birthdate,
+                    'contact_number': self.emergency_contact,
+                    'grade': self.grade,
+                    'address': self.address,
+                    'guardian_name': self.guardian_name,
+                    'nationality': self.nationality
+                }
+            )
+            self.student_id = student
+
+        super().save(*args, **kwargs)
 
 
 class List(models.Model):
@@ -101,13 +162,6 @@ class Teacher(models.Model):
         return reverse("teacher_list", kwargs={"pk": self.pk})
 
 
-class Student(models.Model):
-    GENDER_CHOICES = [
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('O', 'Other'),
-    ]
-
 
 
 
@@ -140,7 +194,7 @@ class CalendarEvent(models.Model):
     description = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.event_name} ({self.start_date} - {self.end_date})"
+        return self.event_name
 
 class Book(models.Model):
     title = models.CharField(max_length=200)

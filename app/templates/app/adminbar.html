@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+    <div class="container-fluid">
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item {% if request.path == '/dashboard/' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        <i class="bi bi-house-door"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == '/files/' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'files' %}">
+                        <i class="bi bi-book"></i> Books
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == '/admission/' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'admission' %}">
+                        <i class="bi bi-file-earmark-person"></i> Enrollment
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == '/list/' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'list' %}">
+                        <i class="bi bi-list"></i> List
+                    </a>
+                </li>
+                <li class="nav-item {% if request.path == '/home/' %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'home' %}">
+                        <i class="bi bi-box-arrow-right"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+ <button id="scrollToTopBtn" class="btn btn-primary" onclick="scrollToTop()">
+  ↑
+</button>
+
+
+<script>
+  // Get the button
+  var mybutton = document.getElementById("scrollToTopBtn");
+
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  };
+
+  // When the user clicks on the button, scroll to the top of the document
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

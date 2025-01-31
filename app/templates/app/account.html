@@ -11,45 +11,7 @@
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account' %}">
-                        <i class="bi bi-person"></i> Accounts
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Log Out
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+{% include 'app/adminbar.html' %}
 
 <div class="container my-5">
     <h2 class="section-title text-primary">Edit Student: {{ student.name }}</h2>

@@ -4,60 +4,166 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
+        .section-title {
+            font-weight: bold;
+            font-size: 1.8rem;
+            color: navy;
+        }
 
+        /* Form Inputs */
+        .form-group label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-control {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: navy;
+            box-shadow: 0 0 5px rgba(0, 0, 255, 0.3);
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 8px;
+            font-size: 1rem;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: navy;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #004080;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a636a;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
+{% include 'app/adminbar.html' %}
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
+<!-- Student Form Section -->
+<div class="container">
+    <div class="form-container">
+        <h2 class="section-title text-center mb-4">
+            {% if student %} Edit Student {% else %} Student Form {% endif %}
+        </h2>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
+        <!-- Display Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
 
-            </ul>
-        </div>
-    </div>
-</nav>
-    <div class="container">
-        <h3>{% if object %}Edit{% else %}Create{% endif %} Student</h3>
-        <form method="post">
+        <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-primary">Save</button>
+
+            <!-- Form Fields -->
+            <div class="form-group">
+                <label for="id_first_name">First Name</label>
+                {{ form.first_name }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_last_name">Last Name</label>
+                {{ form.last_name }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_gender">Gender</label>
+                {{ form.gender }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_birthdate">Birthdate</label>
+                {{ form.birthdate }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_contact_number">Contact Number</label>
+                {{ form.contact_number }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                {{ form.email }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_grade">Grade</label>
+                {{ form.grade }}
+            </div>
+
+            <div class="form-group">
+                <label for="id_address">Address</label>
+                {{ form.address }}
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    {% if student %} Update Student {% else %} Submit Student {% endif %}
+                </button>
+                <a href="{% url 'student_list' %}" class="btn btn-secondary btn-lg">Back to List</a>
+            </div>
         </form>
+
     </div>
+</div>
+
 {% endblock content %}

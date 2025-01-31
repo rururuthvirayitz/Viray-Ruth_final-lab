@@ -4,58 +4,104 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
+        .delete-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
+        .section-title {
+            font-weight: bold;
+            font-size: 1.8rem;
+            color: navy;
+            text-align: center;
+        }
 
+        /* Button Styling */
+        .btn {
+            border-radius: 8px;
+            font-size: 1rem;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a636a;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .delete-container {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
+{% include 'app/adminbar.html' %}
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
+<!-- Delete Student Section -->
+<div class="container">
+    <div class="delete-container">
+        <h3 class="section-title text-primary mb-4">Delete Student: {{ student.first_name }} {{ student.last_name }}</h3>
+        <p>Are you sure you want to delete this student?</p>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-
-            </ul>
-        </div>
+        <!-- Delete Confirmation Form -->
+        <form method="POST">
+            {% csrf_token %}
+            <div class="text-center">
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+                <a href="{% url 'student_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Cancel
+                </a>
+            </div>
+        </form>
     </div>
-</nav>
- <h2>Are you sure you want to delete {{ student.first_name }} {{ student.last_name }}?</h2>
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit">Confirm Delete</button>
-    </form>
-    <a href="{% url 'student_list' %}">Cancel</a>
+</div>
+
 {% endblock content %}

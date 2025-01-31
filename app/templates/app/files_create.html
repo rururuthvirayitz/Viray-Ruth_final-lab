@@ -4,63 +4,125 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+        .mylogo {
+            max-width: 150px;
+            margin-bottom: 1rem;
+        }
 
+        /* Card Styling */
+        .upload-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
+        .upload-card h2 {
+            font-size: 2rem;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
 
+        /* Form Styling */
+        .form-group label {
+            font-size: 1rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-lg {
+            font-size: 1.1rem;
+            padding: 12px 30px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        /* Button Hover Effects */
+        .btn-primary {
+            background-color: #0056b3;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #003f7d;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a636a;
+        }
+
+        /* Spacing and Responsive Design */
+        .container {
+            padding: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .upload-card {
+                padding: 1.5rem;
+            }
+
+            .btn-lg {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
+<!-- Admin Navigation Bar -->
+{% include 'app/adminbar.html' %}
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
-<h1>New File</h1>
+<!-- Main Content Section -->
 <div class="container my-5">
-    <h2 class="section-title text-primary">{% if files %}Edit{% else %}Upload{% endif %} Files</h2>
+    <div class="upload-card shadow-sm p-4 rounded">
+        <h2 class="section-title text-primary text-center mb-4">
+            {% if files %} Edit {% else %} Upload {% endif %} Files
+        </h2>
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save</button>
-        <a href="{% url 'files' %}" class="btn btn-secondary">Cancel</a>
-    </form>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary btn-lg">Save</button>
+                <a href="{% url 'files' %}" class="btn btn-secondary btn-lg">Cancel</a>
+            </div>
+        </form>
+    </div>
 </div>
+
 {% endblock content %}

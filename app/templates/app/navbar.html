@@ -9,29 +9,59 @@
         </button>
 
         <!-- Navbar Links -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'enrollment' %}">Enrollment</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'calendar' %}">Calendar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'book' %}">Learning Resources</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-primary" href="{% url 'login' %}">
-                        <i class="bi bi-box-arrow-in-right"></i> Login
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+ <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item {% if request.path == '/' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item {% if request.path == '/about/' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+        </li>
+        <li class="nav-item {% if request.path == '/enrollment/' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'enrollment' %}">Enrollment</a>
+        </li>
+        <li class="nav-item {% if request.path == '/calendar/' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'calendar' %}">Calendar</a>
+        </li>
+        <li class="nav-item {% if request.path == '/book/' %}active{% endif %}">
+            <a class="nav-link" href="{% url 'book' %}">Learning Resources</a>
+        </li>
+        <li class="nav-item {% if request.path == '/login/' %}active{% endif %}">
+            <a class="btn btn-primary" href="{% url 'login' %}">
+                <i class="bi bi-box-arrow-in-right"></i> Login
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+
+
 </header>
+
+  <button id="scrollToTopBtn" class="btn btn-primary" onclick="scrollToTop()">
+  ↑
+</button>
+
+
+<script>
+  // Get the button
+  var mybutton = document.getElementById("scrollToTopBtn");
+
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  };
+
+  // When the user clicks on the button, scroll to the top of the document
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+</script>

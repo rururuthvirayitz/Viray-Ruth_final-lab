@@ -1,13 +1,16 @@
 /* Global Styles */
 body {
-    background: linear-gradient(to bottom right, #ffffff, #1e293b); /* White to Navy Blue Gradient */
+    background: linear-gradient(to bottom right, #ffffff, #000000); /* White to Navy Blue Gradient */
     color: #333;
     font-family: 'Arial', sans-serif;
+    padding-top: 10px;
 }
 
 .navbar {
     background: #1e293b; /* Updated to a new color, adjust to any color you prefer */
-    box-shadow: 0 4px 6px rgb(255, 255, 255); /* White shadow effect */
+    box-shadow: 0 4px 6px rgb(0, 0, 0); /* White shadow effect */
+    z-index: 1030;
+
 }
 
 .navbar a {
@@ -17,10 +20,28 @@ body {
 .navbar-toggler-icon {
     background-color: #1e293b;
 }
+/* Custom Active Navbar Link */
+.navbar-nav .nav-item.active .nav-link {
+    background-color: #007bff; /* Blue background for active link */
+    color: white !important;    /* White text color */
+    border-radius: 8px;
+}
+
+/* For the Login button */
+.navbar-nav .nav-item.active .btn {
+    background-color: navy;
+    color: white;
+}
+
+.navbar-nav .nav-item.active .nav-link {
+    background-color: #007bff; /* Blue background for active link */
+    color: white !important;    /* White text color */
+    border-radius: 8px;
+}
 
 /* Section Titles */
 .section-title {
-    color: #001f3d; /* Navy Blue */
+    color: #ffffff; /* Navy Blue */
     font-weight: bold;
     font-size: 1.5rem;
     margin-bottom: 15px;
@@ -33,6 +54,8 @@ body {
     box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2); /* White shadow effect */
     padding: 20px;
     margin-top: 20px;
+
+
 }
 
 /* Button Styling */
@@ -44,7 +67,7 @@ body {
 }
 
 .btn-primary:hover {
-    background-color: #003366; /* Darker Navy */
+    background-color: #ffffff; /* Darker Navy */
 }
 
 /* Footer Styling */
@@ -100,9 +123,279 @@ footer p {
     height: auto;
     position: fixed;
     bottom: 20px; /* Distance from the bottom */
-    right: 20px;  /* Distance from the right */
+    left: 20px;  /* Distance from the right */
     z-index: 999; /* Ensures it floats above other content */
 }
-.d-grid{
+
+.btn-custom {
+    background-color: navy;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.announcement-box {
     background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.announcement-header {
+    color: navy;
+    font-weight: bold;
+}
+.announcement-item {
+    background: #f8f9fa;
+    border-left: 5px solid navy;
+}
+.announcement-title {
+    color: navy;
+    font-weight: bold;
+}
+
+ .login {
+        background-color: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
+    }
+
+.mt-7{
+    width: 500px;
+}
+.text-navy {
+    color: navy;
+}
+.alert {
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.btn-outline-primary {
+    font-size: 1rem;
+    font-weight: 500;
+}
+.btn-primary {
+    background-color: navy;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: darkblue;
+}
+.d-grid {
+    margin-top: 20px;
+}
+.d-grid:hover{
+    background: white;
+    color: black;
+}
+.bi {
+    font-size: 1.2rem;
+}
+.book-list-container {
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .text-navy {
+        color: navy;
+    }
+
+    .card {
+        border-radius: 10px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-outline-primary {
+        font-weight: 500;
+    }
+
+    .btn-outline-secondary {
+        font-weight: 500;
+    }
+
+    .btn {
+        border-radius: 8px;
+    }
+
+    .form-control, .form-select {
+        border-radius: 8px;
+        padding: 12px;
+    }
+
+    .row {
+        margin-top: 20px;
+    }
+
+     #scrollToTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: navy;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px 15px;
+    font-size: 18px;
+    display: none; /* Hidden by default */
+    cursor: pointer;
+    z-index: 1000; /* Ensure the button is on top of other elements */
+  }
+
+  #scrollToTopBtn:hover {
+    background-color: #ffffff;
+      color: black;
+  }
+
+
+  /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navbar Styles */
+.navbar {
+    z-index: 1030;
+}
+
+
+/* Welcome Banner */
+.welcome-banner h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: navy;
+}
+
+.welcome-banner p {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+/* Section Titles */
+.section-title {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: navy;
+}
+
+/* Table Styling */
+.table {
+    font-size: 1rem;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-dark {
+    background-color: #343a40;
+    color: white;
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: center;
+}
+
+/* Table Row Hover Effect */
+.table-striped tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button Styling */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-outline-primary {
+    border-color: navy;
+    color: navy;
+}
+
+.btn-outline-primary:hover {
+    background-color: navy;
+    color: white;
+}
+
+.btn-outline-secondary {
+    border-color: #6c757d;
+    color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Academic Calendar and Event Section */
+.academic-calendar, .events-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-item {
+    padding: 15px;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.event-item:last-child {
+    border-bottom: none;
+}
+
+.event-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: navy;
+}
+
+.event-date {
+    font-size: 1rem;
+    color: #6c757d;
+}
+
+.event-description {
+    font-size: 1.1rem;
+    color: #495057;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .navbar-nav .nav-link {
+        font-size: 0.9rem;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+    }
+
+    .welcome-banner h1 {
+        font-size: 2rem;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .container-fluid {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .mylogo {
+        max-width: 150px;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
 }

@@ -4,60 +4,122 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+        }
 
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+        .mylogo {
+            max-width: 150px;
+            margin-bottom: 1rem;
+        }
 
+        .section-title {
+            font-size: 1.8rem;
+            color: #2a3d66;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
 
+        /* Table Styling */
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+            padding: 1rem;
+        }
 
+        .table-striped tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Button Styling */
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid #0056b3;
+            color: #0056b3;
+            background-color: transparent;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        /* Container and Responsive Design */
+        .container {
+            margin-bottom: 2rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        @media (max-width: 768px) {
+            .table th, .table td {
+                padding: 0.75rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .btn-sm {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
+<!-- Admin Navigation Bar -->
+{% include 'app/adminbar.html' %}
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-
-            </ul>
-        </div>
+<div class="container mb-4">
+    <h3 class="section-title text-primary mb-3">Student List</h3>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Student Number</th>
+                    <th>Full Name</th>
+                    <th>Grade</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.student_number }}</td>
+                    <td>{{ student.first_name }} {{ student.last_name }}</td>
+                    <td>{{ student.grade }}</td>
+                    <td>{{ student.email }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No students found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
-</nav>
-<!-- Students List Container -->
-<!-- Students List -->
-
-
-<!-- Teachers List -->
-<<!-- Teachers List -->
+    <a href="{% url 'student_list' %}" class="btn btn-outline-primary btn-sm">More</a>
+</div>
+<!-- Teachers List Section -->
 <div class="container mb-4">
     <h3 class="section-title text-primary mb-3">Teachers List</h3>
     <div class="table-responsive">
@@ -87,7 +149,7 @@
     <a href="{% url 'teachers' %}" class="btn btn-outline-primary btn-sm">More</a>
 </div>
 
-<!-- Personnel List -->
+<!-- Personnel List Section -->
 <div class="container mb-4">
     <h3 class="section-title text-primary mb-3">Personnel List</h3>
     <div class="table-responsive">
@@ -117,7 +179,4 @@
     <a href="{% url 'personnel' %}" class="btn btn-outline-primary btn-sm">More</a>
 </div>
 
-
 {% endblock content %}
-
-

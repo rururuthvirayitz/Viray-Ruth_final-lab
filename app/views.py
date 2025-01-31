@@ -3,23 +3,26 @@ from django.shortcuts import render, redirect
 from datetime import datetime
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Announcement, Book, AcademicEvent, Calendar, Dashboard, Files, Admission, Personnel, List, Teacher, CalendarEvent
-from .forms import AnnouncementForm, BooksForm, DashboardForm, PersonnelForm, FilesForm, EnrollmentForm, ListForm, TeacherForm, CalendarEventForm
+from .models import Announcement, Book, AcademicEvent, Calendar, Dashboard, Files, Admission, Personnel, List, Teacher, CalendarEvent, Student
+from .forms import AnnouncementForm, BooksForm, DashboardForm, PersonnelForm, FilesForm, StudentForm, ListForm, TeacherForm, CalendarEventForm, AdmissionForm
 from django.urls import reverse_lazy
+from django.contrib import messages
+from django.shortcuts import get_object_or_404
+
 
 
 class CustomLoginView(LoginView):
-    template_name = 'registration/login.html'  # Specify your login template
+    template_name = 'registration/login.html'
 
     def get_success_url(self):
-        # Redirect based on the user's role
+
         if self.request.user.is_staff or self.request.user.is_superuser:
-            return redirect('dashboard')  # Admin dashboard
+            return redirect('dashboard')
         else:
-            return redirect('studhome')  # Student home
+            return redirect('studhome')
 
 def admin_dashboard(request):
-    return render(request, 'app/dashboard_list.html')  # Admin-specific template
+    return render(request, 'app/dashboard_list.html')
 
 
 def admin_files(request):
@@ -31,17 +34,17 @@ class DashboardListView(ListView):
     context_object_name = 'dashboard_data'
 
     def get_queryset(self):
-        # Return an empty queryset or None since we're not using a specific model.
+
         return []
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Fetch dashboard data
+
         context['announcements'] = Announcement.objects.all().order_by('-id')[:5]  # Fetch latest 5 announcements
         context['events'] = CalendarEvent.objects.all().order_by('-start_date')[:5]
 
-        # Count total records
+
         context['teacher_count'] = Teacher.objects.count()
         context['personnel_count'] = Personnel.objects.count()
         context['admission_count'] = Admission.objects.count()
@@ -59,21 +62,21 @@ class PersonnelDetailView(DetailView):
     context_object_name = 'personnel'
     template_name = 'app/personnel_detail.html'
 
-# Create View for Personnel
+
 class PersonnelCreateView(CreateView):
     model = Personnel
     form_class = PersonnelForm
     template_name = 'app/personnel_create.html'
-    success_url = reverse_lazy('personnel')  # Redirect to personnel list after success
+    success_url = reverse_lazy('personnel')
 
-# Update View for Personnel
+
 class PersonnelUpdateView(UpdateView):
     model = Personnel
     form_class = PersonnelForm
     template_name = 'app/personnel_update.html'
-    success_url = reverse_lazy('personnel')  # Redirect to personnel list after success
+    success_url = reverse_lazy('personnel')
 
-# Delete View for Personnel
+
 class PersonnelDeleteView(DeleteView):
     model = Personnel
     template_name = 'app/personnel_delete.html'
@@ -117,48 +120,52 @@ class FilesDeleteView(DeleteView):
 
 
 
-
 class AdmissionListView(ListView):
     model = Admission
     template_name = 'app/admission_list.html'
     context_object_name = 'admissions'
 
-# Create Admission
+
 class AdmissionCreateView(CreateView):
     model = Admission
-    fields = ['name', 'grade', 'student_number']
+    fields = '__all__'
     template_name = 'app/admission_create.html'
-    success_url = reverse_lazy('admission')  # Redirect to the list after saving
+    success_url = reverse_lazy('admission')
 
-# Update Admission
+
 class AdmissionUpdateView(UpdateView):
     model = Admission
-    fields = ['name', 'grade', 'student_number', 'status']
+    fields = '__all__'
     template_name = 'app/admission_update.html'
-    success_url = reverse_lazy('admission')  # Redirect to the list after saving
+    success_url = reverse_lazy('admission')
 
-# Delete Admission
+
 class AdmissionDeleteView(DeleteView):
     model = Admission
     template_name = 'app/admission_delete.html'
-    success_url = reverse_lazy('admission')  # Redirect to the list after deleting
+    success_url = reverse_lazy('admission')
 
 class AdmissionDetailView(DetailView):
     model = Admission
-    template_name = 'app/admission_detail.html'  # ✅ Matches your file path
+    template_name = 'app/admission_detail.html'
     context_object_name = 'admissions'
 
-class EnrollmentCreateView(CreateView):
-    model = Admission
-    form_class = EnrollmentForm
-    template_name = 'app/enrollment_create.html'
-    success_url = '/enrollment'  # Redirect to a success page or another view
 
-    # Override form_valid to save data to Admission
-    def form_valid(self, form):
-        # This will save the form data to the Admission model
-        form.save()
-        return redirect(self.success_url)
+def enrollment(request):
+    if request.method == 'POST':
+        form = AdmissionForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'Enrollment successful!')
+            return redirect('enrollment')
+        else:
+            messages.error(request, 'There was an error with your submission.')
+    else:
+        form = AdmissionForm()
+
+    return render(request, 'app/enrollment.html', {'form': form})
+
+
+
 
 
 class ListListView(ListView):
@@ -166,16 +173,24 @@ class ListListView(ListView):
     context_object_name = 'list'
 
     def get_queryset(self):
-        # Return an empty queryset or None since we're not using a single model.
+
         return []
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['personnel'] = Personnel.objects.all().order_by('last_name')[:5]  # Fetch latest 5 personnel
+        context['personnel'] = Personnel.objects.all().order_by('last_name')[:5]
         context['teachers'] = Teacher.objects.all().order_by('last_name')[:5]
-
+        context['students'] = Student.objects.all().order_by('last_name')[:5]
         return context
+
+
+def approve_admission(request, admission_id):
+    admission = get_object_or_404(Admission, id=admission_id)
+    admission.status = 'Approved'
+    admission.save()
+    return redirect('admission_list')
+
 
 
 
@@ -226,9 +241,6 @@ class AboutPageView(TemplateView):
         return context
 
 
-
-class EnrollmentPageView(TemplateView):
-    template_name = 'app/enrollment.html'
 
 
 class CalendarListView(ListView):
@@ -353,7 +365,7 @@ class CalendarEventListView(ListView):
 class CalendarEventDetailView(DetailView):
     model = CalendarEvent
     template_name = 'app/calendar_event_detail.html'
-    context_object_name = 'event'
+    context_object_name = 'events'
 
 class CalendarEventCreateView(CreateView):
     model = CalendarEvent
@@ -371,3 +383,51 @@ class CalendarEventDeleteView(DeleteView):
     model = CalendarEvent
     template_name = 'app/calendar_event_delete.html'
     success_url = reverse_lazy('calendar_event')
+
+
+def student_create(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()  # Save the new student to the database
+            messages.success(request, 'Student created successfully!')
+            return redirect('student_list')  # Redirect to the student list page
+        else:
+            messages.error(request, 'There was an error with the form. Please check again.')
+    else:
+        form = StudentForm()
+
+    return render(request, 'app/student_create.html', {'form': form})
+
+def student_list(request):
+    students = Student.objects.all()
+    return render(request, 'app/student_list.html', {'students': students})
+
+def student_update(request, student_id):
+    student = Student.objects.get(id=student_id)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()  # Save the updated student data
+            messages.success(request, 'Student updated successfully!')
+            return redirect('student_list')
+        else:
+            messages.error(request, 'There was an error with your submission. Please try again.')
+    else:
+        form = StudentForm(instance=student)
+
+    return render(request, 'app/student_update.html', {'form': form, 'student': student})
+
+
+def student_delete(request, student_id):
+    student = Student.objects.get(id=student_id)
+    if request.method == 'POST':
+        student.delete()  # Delete the student from the database
+        messages.success(request, 'Student deleted successfully!')
+        return redirect('student_list')  # Redirect to the student list after deletion
+    return render(request, 'app/student_delete.html', {'student': student})
+
+# app/views.py
+def student_detail(request, student_id):
+    student = get_object_or_404(Student, id=student_id)
+    return render(request, 'app/student_detail.html', {'student': student})

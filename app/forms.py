@@ -1,5 +1,5 @@
 from django import forms
-from .models import (Announcement, Book, AcademicEvent, Calendar, Dashboard, Files, Admission,
+from .models import (Announcement, Book, AcademicEvent, Calendar, Dashboard, Files, Admission, Student,
                      List, Teacher, CalendarEvent, Personnel )
 
 
@@ -17,14 +17,21 @@ class FilesForm(forms.ModelForm):
         fields = ['name', 'subject', 'file', 'file_type']
 
 
+class StudentForm(forms.ModelForm):
+    birthdate = forms.DateField(
+        widget=forms.DateInput(attrs={'type': 'date'})
+    )
 
+    class Meta:
+        model = Student
+        fields = ['first_name', 'last_name', 'gender', 'birthdate', 'contact_number', 'email', 'grade', 'address']
 
 
 class AdmissionForm(forms.ModelForm):
     class Meta:
         model = Admission
-        fields = ['name', 'grade', 'student_number', 'birthdate', 'gender', 'address', 'guardian_name',
-                  'emergency_contact', 'nationality', 'email']
+        fields = ['name', 'student_number', 'grade', 'address', 'birthdate', 'email', 'emergency_contact', 'gender',
+                  'guardian_name', 'nationality']
 
 class ListForm(forms.ModelForm):
     class Meta:

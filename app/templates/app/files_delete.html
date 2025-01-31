@@ -15,50 +15,81 @@
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
+{% include 'app/adminbar.html' %}
 <div class="container my-5 text-center">
-    <h2 class="text-danger">Are you sure you want to delete "{{ file.name }}"?</h2>
+    <h2 class="text-danger mb-4">Are you sure you want to delete "{{ file.name }}"?</h2>
 
     <form method="POST">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Yes, Delete</button>
-        <a href="{% url 'files' %}" class="btn btn-secondary">Cancel</a>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-danger btn-lg mr-3">Yes, Delete</button>
+            <a href="{% url 'files' %}" class="btn btn-secondary btn-lg">Cancel</a>
+        </div>
     </form>
 </div>
+
+<!-- Custom CSS -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .mylogo {
+        max-width: 200px;
+    }
+
+    .container {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        font-weight: 600;
+        font-size: 2rem;
+    }
+
+    .btn {
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding: 12px 30px;
+        border-radius: 8px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .d-flex {
+            flex-direction: column;
+        }
+    }
+</style>
 {% endblock content %}

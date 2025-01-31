@@ -4,85 +4,112 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
-
-
-
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
+<!-- Admin Navigation Bar -->
+{% include 'app/adminbar.html' %}
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</nav>
+<!-- File Details Section -->
 <div class="container my-5">
-    <h2 class="text-primary">File Details</h2>
+    <h2 class="text-primary text-center mb-4">File Details</h2>
 
-    <table class="table table-bordered">
-        <tr>
-            <th>File Name:</th>
-            <td>{{ files.name }}</td>
-        </tr>
-        <tr>
-            <th>Subject:</th>
-            <td>{{ files.subject }}</td>
-        </tr>
-        <tr>
-            <th>Type:</th>
-            <td>{{ files.file_type }}</td>
-        </tr>
-        <tr>
-            <th>Uploaded On:</th>
-            <td>{{ files.uploaded_on }}</td>
-        </tr>
-        <tr>
-            <th>Uploaded By:</th>
-            <td>{{ files.uploaded_by }}</td>
-        </tr>
-        <tr>
-            <th>File:</th>
-            <td>
-                <a href="{{ file.file.url }}" class="btn btn-primary" download>Download</a>
-            </td>
-        </tr>
+    <!-- File Details Table -->
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>File Name:</th>
+                <td>{{ files.name }}</td>
+            </tr>
+            <tr>
+                <th>Subject:</th>
+                <td>{{ files.subject }}</td>
+            </tr>
+            <tr>
+                <th>Type:</th>
+                <td>{{ files.file_type }}</td>
+            </tr>
+            <tr>
+                <th>Uploaded On:</th>
+                <td>{{ files.uploaded_on }}</td>
+            </tr>
+            <tr>
+                <th>Uploaded By:</th>
+                <td>{{ files.uploaded_by }}</td>
+            </tr>
+            <tr>
+                <th>File:</th>
+                <td>
+                    <a href="{{ files.file.url }}" class="btn btn-primary" download>Download</a>
+                </td>
+            </tr>
+        </tbody>
     </table>
 
-    <a href="{% url 'files' %}" class="btn btn-secondary">Back to List</a>
+    <!-- Back to List Button -->
+    <div class="text-center">
+        <a href="{% url 'files' %}" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    /* Button Styling */
+    .btn-primary:hover {
+        background-color: #050505;
+        color: white;
+    }
+
+    .btn-secondary {
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    .btn-secondary:hover {
+        color: white;
+        background-color: black;
+    }
+
+    /* Table Styling */
+    table {
+        width: 100%;
+        background-color: #fff;
+        border-radius: 8px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    th {
+        background-color: transparent;
+        color: #000000;
+        font-weight: bold;
+    }
+
+    td {
+        background-color: #f8f9fa;
+    }
+
+    /* Text Styling */
+    .text-primary {
+        font-weight: 600;
+        color: navy;
+    }
+
+    /* Hover Effects on Table Rows */
+    tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+</style>
+
 {% endblock content %}

@@ -4,69 +4,137 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
-
-
-
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
+<!-- Admin Navbar -->
+{% include 'app/adminbar.html' %}
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
+<!-- Announcements Section -->
+<div class="container my-5">
+    <h2 class="text-primary text-center mb-4">📢 Announcements</h2>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-
-            </ul>
-        </div>
+    <!-- Add Announcement Button -->
+    <div class="text-center mb-4">
+        <a href="{% url 'announcement_create' %}" class="btn btn-success btn-lg">
+            <i class="bi bi-plus-circle"></i> Add Announcement
+        </a>
     </div>
-</nav>
-<div class="container">
-    <h2>Announcements</h2>
-    <a href="{% url 'announcement_create' %}" class="btn btn-primary">Add Announcement</a>
-    <ul class="list-group mt-4">
+
+    <!-- Announcements List -->
+    <ul class="list-group">
         {% for announcement in announcements %}
-            <li class="list-group-item">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
                 <h4>{{ announcement.title }}</h4>
-                <p>{{ announcement.content }}</p>
-                <a href="{% url 'announcement_detail' announcement.pk %}" class="btn btn-info">View</a>
-                <a href="{% url 'announcement_update' announcement.pk %}" class="btn btn-warning">Edit</a>
-                <a href="{% url 'announcement_delete' announcement.pk %}" class="btn btn-danger">Delete</a>
-            </li>
+                <p class="text-muted">{{ announcement.created_at|date:"F j, Y" }}</p>
+                <p>{{ announcement.content|truncatewords:20 }}</p>
+            </div>
+            <div class="btn-group" role="group">
+                <a href="{% url 'announcement_detail' announcement.pk %}" class="btn btn-info btn-sm">
+                    <i class="bi bi-eye"></i> View
+                </a>
+                <a href="{% url 'announcement_update' announcement.pk %}" class="btn btn-warning btn-sm">
+                    <i class="bi bi-pencil"></i> Edit
+                </a>
+                <a href="{% url 'announcement_delete' announcement.pk %}" class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i> Delete
+                </a>
+            </div>
+        </li>
         {% empty %}
-            <li class="list-group-item">No announcements <a href="{% url 'announcement' %}"></a>vailable.</li>
+        <li class="list-group-item text-center">No announcements available.</li>
         {% endfor %}
     </ul>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a href="{% url 'dashboard' %}#announcements" class="btn btn-secondary btn-lg">
+            <i class="bi bi-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
 </div>
+
+<!-- Custom CSS -->
+<style>
+    .btn-group .btn {
+        margin-left: 5px;
+    }
+
+    .list-group-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .list-group-item a {
+        color: #000000;
+    }
+
+    .list-group-item a:hover {
+        text-decoration: underline;
+    }
+
+    .text-primary {
+        font-weight: 600;
+        color: #007bff;
+    }
+
+    /* Button hover effects */
+    .btn-info:hover {
+        background-color: #17a2b8;
+        color: white;
+    }
+
+    .btn-warning:hover {
+        background-color: #e0a800;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        color: white;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        color: white;
+    }
+
+    .btn-secondary {
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+    }
+
+    .btn-lg {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+
+    .text-muted {
+        font-size: 0.9rem;
+    }
+
+    /* Truncate the content text */
+    p {
+        font-size: 1rem;
+        color: #495057;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+</style>
+
 {% endblock content %}

@@ -7,47 +7,16 @@
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<!-- Admin Navbar -->
+{% include 'app/adminbar.html' %}
 
+<!-- Main Container -->
 <div class="container-fluid">
-    <!-- Main container to hold all sections -->
 
     <!-- Welcome Banner Section -->
     <div class="container mb-4">
@@ -81,18 +50,6 @@
                         <td>Admission Records</td>
                         <td>{{ admission_count }}</td>
                     </tr>
-                    <tr>
-                        <td>New Admissions (This Month)</td>
-                        <td>{{ new_admissions }}</td>
-                    </tr>
-                    <tr>
-                        <td>New Teachers (This Month)</td>
-                        <td>{{ new_teachers }}</td>
-                    </tr>
-                    <tr>
-                        <td>New Personnel (This Month)</td>
-                        <td>{{ new_personnel }}</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -110,7 +67,7 @@
                 <div class="announcement-item mb-3">
                     <h4 class="announcement-title">{{ announcement.title }}</h4>
                     <p>Created By: {{ announcement.created_by }}</p>
-                    <p>{{ announcement.content}}</p>
+                    <p>{{ announcement.content }}</p>
                     <p>{{ announcement.body }}</p>
                     <p>{{ announcement.visibility }}</p>
                 </div>
@@ -172,4 +129,96 @@
 
 </div>
 
-{% endblock %}
+<!-- Custom CSS -->
+<style>
+    /* General styling */
+    .section-title {
+        font-weight: 600;
+        color: #007bff;
+    }
+
+    .btn-outline-primary {
+        font-weight: 500;
+    }
+
+    .btn-outline-primary:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-sm {
+        padding: 5px 10px;
+    }
+
+    /* Table styling */
+    .table {
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+        text-align: center;
+        padding: 15px;
+    }
+
+    .table-dark {
+        background-color: #343a40;
+        color: white;
+    }
+
+    .table-striped tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    /* Flexbox layout for content */
+    .d-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* Announcement Box */
+    .announcement-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Event Item */
+    .event-item {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-item h4 {
+        font-weight: 600;
+    }
+
+    .event-item p {
+        color: #495057;
+    }
+
+    /* Hover effect on items */
+    .event-item:hover, .announcement-item:hover {
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        transform: scale(1.02);
+        transition: all 0.3s ease-in-out;
+    }
+
+    /* Responsive styling */
+    @media (max-width: 768px) {
+        .container {
+            padding: 20px;
+        }
+
+        .btn-lg {
+            font-size: 1rem;
+            padding: 8px 20px;
+        }
+    }
+</style>
+
+{% endblock content %}

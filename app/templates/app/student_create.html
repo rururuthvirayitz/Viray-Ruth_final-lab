@@ -4,58 +4,181 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
 
-        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+        }
 
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
+        .section-title {
+            font-weight: bold;
+            font-size: 1.8rem;
+            color: navy;
+            text-align: center;
+        }
 
+        /* Form Inputs */
+        .form-group label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-control {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            background-color: #f8f9fa;
+        }
+
+        .form-control:focus {
+            border-color: navy;
+            box-shadow: 0 0 5px rgba(0, 0, 255, 0.3);
+        }
+
+        /* Buttons */
+        .btn {
+            border-radius: 8px;
+            font-size: 1rem;
+            padding: 12px 24px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: navy;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #003f7d;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a636a;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 
+<!-- Logo Section -->
 <div class="text-center my-4">
     <img class="mylogo img-fluid" src="{% static 'images/logo.png' %}" alt="Logo">
 </div>
 
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
-    <div class="container-fluid">
+{% include 'app/adminbar.html' %}
 
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'dashboard' %}">
-                        <i class="bi bi-house-door"></i> Dashboard
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'files' %}">
-                        <i class="bi bi-book"></i> Books
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admission' %}">
-                        <i class="bi bi-file-earmark-person"></i> Enrollment
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'list' %}">
-                        <i class="bi bi-list"></i> List
-                    </a>
-                </li>
+<!-- Student Enrollment Form Section -->
+<div class="container">
+    <div class="form-container">
+        <h2 class="section-title text-center mb-4">Enroll New Student</h2>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home' %}">
-                        <i class="bi bi-box-arrow-right"></i> Logout
-                    </a>
-                </li>
+        <!-- Success & Error Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
 
-            </ul>
-        </div>
+        <!-- Student Enrollment Form -->
+        <form method="POST" action="{% url 'student_create' %}">
+            {% csrf_token %}
+
+            <!-- Form Fields -->
+            <div class="form-group">
+                <label for="id_first_name">First Name</label>
+                <input type="text" class="form-control" id="id_first_name" name="first_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_last_name">Last Name</label>
+                <input type="text" class="form-control" id="id_last_name" name="last_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_gender">Gender</label>
+                <select class="form-select" id="id_gender" name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="id_birthdate">Birthdate</label>
+                <input type="date" class="form-control" id="id_birthdate" name="birthdate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_contact_number">Contact Number</label>
+                <input type="text" class="form-control" id="id_contact_number" name="contact_number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                <input type="email" class="form-control" id="id_email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_grade">Grade</label>
+                <select class="form-select" id="id_grade" name="grade" required>
+                    <option value="">Select Grade</option>
+                    <option value="1">Grade 1</option>
+                    <option value="2">Grade 2</option>
+                    <option value="3">Grade 3</option>
+                    <option value="4">Grade 4</option>
+                    <option value="5">Grade 5</option>
+                    <option value="6">Grade 6</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="id_address">Address</label>
+                <textarea class="form-control" id="id_address" name="address" required></textarea>
+            </div>
+
+            <!-- Buttons -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary btn-lg">Submit Student</button>
+                <a href="{% url 'student_list' %}" class="btn btn-secondary btn-lg">Back to List</a>
+            </div>
+        </form>
     </div>
-</nav>
- <h2>Create Student</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
+</div>
+
 {% endblock content %}

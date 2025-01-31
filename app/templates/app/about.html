@@ -1,41 +1,36 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
-<div class="row">
-       <div class="container about-container mb-4 p-4 text-center">
-        <h2 class="section-title text-primary">About Our School</h2>
-        <p class="lead">
-            Our school is dedicated to fostering academic excellence and personal growth in every student.
-               With a legacy of innovation and commitment to holistic education, we provide an inclusive environment
-               that nurtures creativity, leadership, and lifelong learning.</p>
-            <p>Established in [Year], our institution has continually evolved to meet the challenges of the modern world
-               while staying true to our core values of integrity, respect, and excellence.</p>
-            <a href="/about" class="btn btn-primary">Learn More</a>
-           </p>
+<div class="container">
+    <h2>Welcome to the School</h2>
+    <p>Click the button below to learn more.</p>
+    <button class="btn btn-custom" type="button" data-bs-toggle="collapse" data-bs-target="#moreInfo">
+        Learn More
+    </button>
+    <div class="collapse mt-3" id="moreInfo">
+        <div class="card card-body">
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+        </div>
     </div>
-        </div>
-        <div class="col-md-6">
-
-        </div>
 </div>
 
 
 <div class="container">
-    <div class="announcement-box mb-4">
+    <div class="announcement-box p-4 rounded shadow">
         <div class="d-flex justify-content-between align-items-center mb-3">
-            <h3 class="section-title text-primary">Announcements</h3>
+            <h2 class="text-center announcement-header">📢 Announcements</h2>
         </div>
         <div class="announcement-content">
             {% for announcement in announcements %}
-            <div class="announcement-item mb-3">
+            <div class="announcement-item p-3 mb-3 rounded">
                 <h4 class="announcement-title">{{ announcement.title }}</h4>
-                <p>Created By: {{ announcement.created_by }}</p>
-                <p>{{ announcement.content}}</p>
+                <p class="text-muted">Created By: <strong>{{ announcement.created_by }}</strong></p>
+                <p>{{ announcement.content }}</p>
                 <p>{{ announcement.body }}</p>
-                <p>{{ announcement.visibility }}</p>
+                <p class="text-muted"><em>Visibility: {{ announcement.visibility }}</em></p>
             </div>
             {% empty %}
-            <p>No announcements available.</p>
+            <p class="text-center text-danger">No announcements available.</p>
             {% endfor %}
         </div>
     </div>
